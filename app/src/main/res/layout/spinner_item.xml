@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Widget.AppCompat.Light.DropDownItem.Spinner"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/spinner_item"
+        style="@style/Widget.AppCompat.TextView.SpinnerItem"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="4dp"
+        android:layout_marginTop="4dp"
+        android:fontFamily="monospace"
+        android:textAlignment="center"
+        android:gravity="center_vertical"
+        android:textAllCaps="true"
+        android:textColor="@color/textColorPrimaryLight"
+        android:textSize="16sp"
+        tools:text="BTC" />
+
+</LinearLayout>

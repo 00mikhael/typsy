@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/cardview_light_background"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <android.support.v7.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:fontFamily="cursive"
+        android:text="@string/rate_me"
+        android:textColor="@color/textColorPrimaryDark"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+    <android.support.v7.widget.AppCompatRatingBar
+        android:id="@+id/rating_bar"
+        style="?android:attr/ratingBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="8dp"
+        android:numStars="5"
+        tools:rating="2.5"
+        android:stepSize="0.5" />
+
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/feedback_edit_text"
+        style="@style/Widget.AppCompat.EditText"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/tint"
+        android:fontFamily="monospace"
+        android:gravity="top"
+        android:hint="@string/feedback"
+        android:inputType="textMultiLine"
+        android:minHeight="100dp"
+        android:padding="8dp"
+        android:textColor="@color/textColorPrimaryDark"
+        android:textColorHint="@android:color/darker_gray" />
+
+</LinearLayout>

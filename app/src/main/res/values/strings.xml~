@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Typsy</string>
+    <string name="currency_symbol">currency code</string>
+    <string name="conversion_symbol">conversion code</string>
+    <string name="created">created</string>
+    <string name="updated">updated</string>
+    <string name="hint">0.00</string>
+    <string name="settings">settings</string>
+    <string name="rate_me">Rate me</string>
+    <string name="about">about</string>
+    <string name="credits">Credits</string>
+    <string name="api_cryptocompare_com">api: cryptocompare.com</string>
+    <string name="online">online</string>
+    <string name="delete">delete</string>
+    <string name="snack_delete">conversion deleted</string>
+    <string name="undo">UNDO</string>
+    <string name="feedback">feedback</string>
+    <string name="error">AN ERROR OCCURRED</string>
+    <string name="success">SUCCESS</string>
+    <string name="loading">LOADING</string>
+    <string name="offline">offline</string>
+    <string name="rating">Rate</string>
+    <string name="cancel">Cancel</string>
+    <string name="rating_dialog">RatingDialog</string>
+</resources>
