@@ -32,7 +32,7 @@ public class AboutViewModel extends AndroidViewModel {
             try {
                 GMailSender sender = new GMailSender(
                         "ifeanyimcn@gmail.com",
-                        "ifeanyimichael");
+                        "");
                 sender.sendMail(
                         "NEW TYPSY RATING",
                         "\n" + "Feedback : \n" + rating.getFeedback() + "\n\n" + "Rating : " + rating.getRating(),
