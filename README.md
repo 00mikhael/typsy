@@ -12,4 +12,5 @@ cryptocurrency converter
 * EPIC Andela
 * Google
 * Udacity
-* #AndelaALC17
+* #andelaalc17
+* #alcwithgoogle
