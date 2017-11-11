@@ -38,6 +38,7 @@ public class ConversionListFragment extends Fragment implements BaseAdapter.Clic
         return super.getLifecycle();
     }
 
+    // private fields declaration
     private FragmentManager mFragmentManager;
     private RecyclerView mRecyclerView;
     private FloatingActionButton mFab;
@@ -48,6 +49,7 @@ public class ConversionListFragment extends Fragment implements BaseAdapter.Clic
 
     private ConversionListViewModel mViewModel;
 
+    // creates a new instance of the fragment
     public static ConversionListFragment newInstance() {
         return new ConversionListFragment();
     }
@@ -57,7 +59,10 @@ public class ConversionListFragment extends Fragment implements BaseAdapter.Clic
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_main, container, false);
 
-        //
+        // creating an instance of ConversionListViewModel from ViewModelProviders
+        mViewModel = ViewModelProviders.of(this).get(ConversionListViewModel.class);
+
+        // initializing fields
         mFragmentManager = getActivity().getSupportFragmentManager();
         mRecyclerView = view.findViewById(R.id.home_recycler_view);
         mFab = view.findViewById(R.id.home_fab);
@@ -76,8 +81,7 @@ public class ConversionListFragment extends Fragment implements BaseAdapter.Clic
             Util.replaceFragmentInActivity(mFragmentManager, fragment);
         });
 
-        mViewModel = ViewModelProviders.of(this).get(ConversionListViewModel.class);
-
+        // observe conversion list
         mViewModel.getConversionList().observe(this, conversions -> {
             mConversions = conversions;
             mAdapter.add(mConversions);
@@ -86,6 +90,7 @@ public class ConversionListFragment extends Fragment implements BaseAdapter.Clic
         return view;
     }
 
+    // on swiped - deletes or restores conversion
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction, int position) {
         if (viewHolder instanceof BaseAdapter.ConversionViewHolder) {
@@ -105,6 +110,7 @@ public class ConversionListFragment extends Fragment implements BaseAdapter.Clic
         }
     }
 
+    // on card clicked - opens a conversion dialog
     @Override
     public void onCardClicked(int position) {
         Conversion conversion = mConversions.get(position);

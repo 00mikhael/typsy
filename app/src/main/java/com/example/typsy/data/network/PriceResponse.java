@@ -7,6 +7,7 @@ import java.util.Map;
 /**
  * Created by gravity on 10/19/17.
  */
+// Api response class
 public class PriceResponse {
     @SerializedName("RAW")
     private Map<String, Map<String, PriceRaw>> raw;

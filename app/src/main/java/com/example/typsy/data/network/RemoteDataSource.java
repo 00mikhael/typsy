@@ -17,7 +17,10 @@ import io.reactivex.schedulers.Schedulers;
 /**
  * Created by gravity on 10/30/17.
  */
-
+/**
+ * Remote Data Source - A Singleton class that Abstracts
+ * away how data is fetched from the network from the data controller
+ */
 public class RemoteDataSource {
 
     private static RemoteDataSource INSTANCE;

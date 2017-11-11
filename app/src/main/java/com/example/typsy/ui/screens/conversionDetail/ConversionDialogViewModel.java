@@ -26,6 +26,7 @@ import java.util.Objects;
 
 public class ConversionDialogViewModel extends AndroidViewModel {
 
+    // declare mutable fields
     private MutableLiveData<Resource<Price>> vmPrice = new MutableLiveData<>();
     private MutableLiveData<List<Coin>> vmCoinList = new MutableLiveData<>();
     private MutableLiveData<List<Currency>> vmCurrencyList = new MutableLiveData<>();
@@ -34,10 +35,10 @@ public class ConversionDialogViewModel extends AndroidViewModel {
     private MutableLiveData<Coin> vmCoin = new MutableLiveData<>();
     private MutableLiveData<Currency> vmCurrency = new MutableLiveData<>();
     private MutableLiveData<String> vmSnackMessage = new MutableLiveData<>();
-
     private MutableLiveData<String> conversion_id = new MutableLiveData<>();
     private LiveData<Conversion> conversion = new MediatorLiveData<>();
 
+    // data controller
     private DataRepository mRepository;
 
     public ConversionDialogViewModel(@NonNull Application application) {

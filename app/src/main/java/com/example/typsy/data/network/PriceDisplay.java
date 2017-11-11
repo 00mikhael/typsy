@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by gravity on 10/20/17.
  */
-
+// Class for display version of the api response
 public class PriceDisplay {
     @SerializedName("FROMSYMBOL")
     private String fsym;

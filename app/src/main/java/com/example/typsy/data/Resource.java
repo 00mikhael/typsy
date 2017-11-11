@@ -10,7 +10,7 @@ import static com.example.typsy.data.Status.SUCCESS;
 /**
  * Created by gravity on 11/8/17.
  */
-
+// wrapper class for passing data along with states
 public class Resource<T> {
     @NonNull
     public final Status status;

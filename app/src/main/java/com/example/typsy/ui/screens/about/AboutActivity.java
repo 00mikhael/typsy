@@ -26,6 +26,7 @@ public class AboutActivity extends AppCompatActivity implements RatingDialog.Rat
         mRateFab.setOnClickListener(view -> showRatingDialog());
     }
 
+    // on rate clicked on dialog - creates new rating, calls sendmail method
     @Override
     public void onDialogPositiveClick(DialogFragment dialog, float rating, String feedback) {
         Rating r = new Rating();
@@ -34,11 +35,13 @@ public class AboutActivity extends AppCompatActivity implements RatingDialog.Rat
         sendMail(r);
     }
 
+    // shows rating dialog on fab clicked
     public void showRatingDialog() {
         DialogFragment dialog = new RatingDialog();
         dialog.show(getSupportFragmentManager(), getString(R.string.rating_dialog));
     }
 
+    // sends mail
     public void sendMail(Rating rating) {
         String body = "\n" + "Feedback : " + rating.getFeedback() + "\n" + "Rating : " + rating.getRating();
         Intent intent = new Intent(Intent.ACTION_SENDTO);

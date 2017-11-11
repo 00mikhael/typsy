@@ -10,7 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 /**
  * Created by gravity on 10/21/17.
  */
-
+// Retrofit client class
 public class ApiClient {
 
     private static ApiClient instance;
@@ -32,6 +32,7 @@ public class ApiClient {
         return instance;
     }
 
+    // price call
     public Observable<PriceResponse> getPriceResponse(@NonNull String fsym, String tsym) {
         return apiService.getPriceResponse(fsym, tsym);
     }

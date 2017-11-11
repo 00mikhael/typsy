@@ -53,6 +53,7 @@ public class ConversionDialogFragment extends Fragment {
 
     private static final String CONVERSION_ID = "conversion_id";
 
+    // private fields declaration
     private FragmentManager mFragmentManager;
     private AppCompatImageView mCryptoImage;
     private CircleImageView mCurrencyImage;
@@ -70,7 +71,6 @@ public class ConversionDialogFragment extends Fragment {
     private CustomSpinnerAdapterCrypto mCryptoSpinnerAdapter;
     private CustomSpinnerAdapterCurrency mCurrencySpinnerAdapter;
 
-
     private ConversionDialogViewModel mViewModel;
     private String fcode = null;
     private String tcode = null;
@@ -86,12 +86,14 @@ public class ConversionDialogFragment extends Fragment {
 
     private String conversion_id;
 
+    // returns current lifecycle
     @NonNull
     @Override
     public Lifecycle getLifecycle() {
         return super.getLifecycle();
     }
 
+    // creates a new instance of the fragment with a conversion id
     public static ConversionDialogFragment newInstance(String conversion_id) {
         ConversionDialogFragment fragment = new ConversionDialogFragment();
         Bundle bundle = new Bundle();
@@ -106,13 +108,18 @@ public class ConversionDialogFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.conversion_dialog, container, false);
 
+        // creating an instance of ConversionDialogViewModel from ViewModelProviders
         mViewModel = ViewModelProviders.of(this).get(ConversionDialogViewModel.class);
+
+        // gets conversion if from bundle
         conversion_id = getArguments().getString(CONVERSION_ID);
 
+        // sets mutable conversion_id field in ViewModel to current conversion
         if (conversion_id != null) {
             mViewModel.setConversion_id(conversion_id);
         }
-        //
+
+        // initializing fields
         mFragmentManager = getActivity().getSupportFragmentManager();
         mCryptoImage = view.findViewById(R.id.dialog_crypto_avatar);
         mCurrencyImage = view.findViewById(R.id.dialog_currency_avatar);
@@ -144,32 +151,40 @@ public class ConversionDialogFragment extends Fragment {
         return view;
     }
 
+    // onViewCreated - initialize observable fields
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        // observe coin list
         mViewModel.getVmCoinList().observe(this, coins -> {
             mCoinList = coins;
             mCryptoSpinnerAdapter.setItems(coins);
             mViewModel.setVmCoin(Util.getCurrentCoin(mCoinList, mConversion.getFromCode()));
         });
+
+        // observe currency list
         mViewModel.getVmCurrencyList().observe(this, currencies -> {
             mCurrencyList = currencies;
             mCurrencySpinnerAdapter.setItems(currencies);
             mViewModel.setVmCurrency(Util.getCurrentCurrency(mCurrencyList, mConversion.getToCode()));
         });
 
+        // observe current coin
         mViewModel.getVmCoin().observe(this, coin -> {
             mCoin = coin;
             ConversionDialogFragment.this.onCoinChange(coin);
             mViewModel.setVmFCode(coin.getCode());
         });
 
+        // observe current currency
         mViewModel.getVmCurrency().observe(this, currency -> {
             mCurrency = currency;
             onCurrencyChange(currency);
             mViewModel.setVmTCode(currency.getCode());
         });
 
+        // observe current price and change states
         mViewModel.getVmPrice().observe(this, resource -> {
             if (resource.status.equals(Status.LOADING)) {
                 if (resource.data != null) {
@@ -188,6 +203,7 @@ public class ConversionDialogFragment extends Fragment {
 
         });
 
+        // observe coin spinner selected code and query price
         mViewModel.getVmFCode().observe(this, s -> {
             fcode = s;
             if (tcode != null) {
@@ -195,6 +211,7 @@ public class ConversionDialogFragment extends Fragment {
             }
         });
 
+        // observe currency spinner selected code and query price
         mViewModel.getVmTCode().observe(this, s -> {
             tcode = s;
             if (fcode != null) {
@@ -202,6 +219,7 @@ public class ConversionDialogFragment extends Fragment {
             }
         });
 
+        // observe and show snackbar messages
         mViewModel.getVmSnackMessage().observe(this, s -> {
             if (s != null) {
                 Snackbar snackbar = Snackbar.make(mCoordinatorLayout, s, Snackbar.LENGTH_SHORT);
@@ -211,8 +229,10 @@ public class ConversionDialogFragment extends Fragment {
         setUpView();
     }
 
+    // set up view listeners
     public void setUpView() {
 
+        // click listener for crypto spinner
         mCryptoSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -224,6 +244,7 @@ public class ConversionDialogFragment extends Fragment {
             public void onNothingSelected(AdapterView<?> adapterView) {}
         });
 
+        // click listener for currency spinner
         mCurrencySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -235,6 +256,7 @@ public class ConversionDialogFragment extends Fragment {
             public void onNothingSelected(AdapterView<?> adapterView) {}
         });
 
+        // text change listener for amount to convert edittext
         mAmountToConvert.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -258,6 +280,7 @@ public class ConversionDialogFragment extends Fragment {
             }
         });
 
+        // click listener for done fab - updates conversion and saves
         mDoneFab.setOnClickListener(view1 -> {
             ConversionDialogFragment.this.hideSoftInputPanel(mAmountToConvert);
             mViewModel.updateConversion(ConversionDialogFragment.this.onConversionComplete(mCoin, mCurrency, mPrice));
@@ -266,22 +289,26 @@ public class ConversionDialogFragment extends Fragment {
         });
     }
 
+    // set up view on price change
     private void onPriceChange(Price price) {
         mCryptoSymbol.setText(price.getfSym());
         mCurrencySymbol.setText(price.gettSym());
         mConversionValue.setText(String.valueOf(Util.toTwoDecimal(calculateValue(mPrice))));
     }
 
+    // set up view on coin change
     private void onCoinChange(Coin coin) {
         Glide.with(this).load(coin.getImageUrl()).thumbnail(0.5f).into(mCryptoImage);
         mCryptoName.setText(coin.getCoinName());
     }
 
+    // set up view on currency change
     private void onCurrencyChange(Currency currency) {
         Glide.with(this).load(currency.getFlag()).thumbnail(0.5f).into(mCurrencyImage);
         mCurrencyName.setText(currency.getName());
     }
 
+    // calculate conversion value
     private Double calculateValue(Price price) {
         if (input != null) {
             result = price.getRawPrice() * input;
@@ -290,6 +317,7 @@ public class ConversionDialogFragment extends Fragment {
         return result;
     }
 
+    // updates conversion when done fab is clicked
     private Conversion onConversionComplete(Coin coin, Currency currency, Price price) {
         mConversion.setAmountToConvert(input);
         mConversion.setConversionResult(result);
@@ -306,6 +334,7 @@ public class ConversionDialogFragment extends Fragment {
         return mConversion;
     }
 
+    // hides keyboard
     private void hideSoftInputPanel(View v) {
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         if (imm != null) {
@@ -313,6 +342,7 @@ public class ConversionDialogFragment extends Fragment {
         }
     }
 
+    // observes network state and update view
     private void observeNetwork() {
         Single<Boolean> single = ReactiveNetwork.checkInternetConnectivity();
         compositeDisposable.add(single.subscribeOn(Schedulers.io())
@@ -328,6 +358,7 @@ public class ConversionDialogFragment extends Fragment {
                 }));
     }
 
+    // clear disposables
     @Override
     public void onPause() {
         super.onPause();
