@@ -5,11 +5,7 @@ cryptocurrency converter
 
 | one | two |
 |:-:|:-:|
-| ![one](/art/a.png?raw=true) | ![two](/art/b.png?raw=true) |
-
-| three |
-|:-:|
-| ![three](/art/c.png?raw=true) |
+| ![one](/art/a.png?raw=true) | ![two](/art/c.png?raw=true) |
 
 ## Acknowledgments
 
