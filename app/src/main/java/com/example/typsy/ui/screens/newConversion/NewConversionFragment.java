@@ -34,11 +34,16 @@ import com.example.typsy.data.local.entity.Price;
 import com.example.typsy.ui.CustomSpinnerAdapterCrypto;
 import com.example.typsy.ui.CustomSpinnerAdapterCurrency;
 import com.example.typsy.ui.screens.conversionList.ConversionListFragment;
+import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import io.reactivex.Single;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by gravity on 11/6/17.
@@ -73,6 +78,7 @@ public class NewConversionFragment extends Fragment {
     private Price mPrice = new Price();
     private List<Coin > mCoinList = new ArrayList<>();
     private List<Currency> mCurrencyList = new ArrayList<>();
+    private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     @NonNull
     @Override
@@ -190,7 +196,7 @@ public class NewConversionFragment extends Fragment {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 mViewModel.setVmCoin(mCoinList.get(i));
                 mConversionValue.setText(String.valueOf(Util.toTwoDecimal(0.00)));
-                /*observeNetwork();*/
+                observeNetwork();
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {}
@@ -201,7 +207,7 @@ public class NewConversionFragment extends Fragment {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 mViewModel.setVmCurrency(mCurrencyList.get(i));
                 mConversionValue.setText(String.valueOf(Util.toTwoDecimal(0.00)));
-                /*observeNetwork();*/
+                observeNetwork();
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {}
@@ -222,7 +228,7 @@ public class NewConversionFragment extends Fragment {
                 }else {
                     mConversionValue.setText(String.valueOf(Util.toTwoDecimal(0.00)));
                 }
-                /*observeNetwork();*/
+                observeNetwork();
             }
 
             @Override
@@ -289,19 +295,24 @@ public class NewConversionFragment extends Fragment {
         }
     }
 
-    /*private void observeNetwork() {
+    private void observeNetwork() {
         Single<Boolean> single = ReactiveNetwork.checkInternetConnectivity();
-        disposable = single.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(isConnectedToTheInternet -> {
-                    if (isConnectedToTheInternet) {
-                        mConnectionStatus.setTextColor(getResources().getColor(R.color.green));
-                        mConnectionStatus.setText(getResources().getString(R.string.online));
-                    }else {
-                        mConnectionStatus.setTextColor(getResources().getColor(R.color.red));
-                        mConnectionStatus.setText(R.string.offline);
-                    }
-                });
-    }*/
+        compositeDisposable.add(single.subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(isConnectedToTheInternet -> {
+                        if (isConnectedToTheInternet) {
+                            mConnectionStatus.setTextColor(NewConversionFragment.this.getResources().getColor(R.color.green));
+                            mConnectionStatus.setText(R.string.online);
+                        } else {
+                            mConnectionStatus.setTextColor(NewConversionFragment.this.getResources().getColor(R.color.red));
+                            mConnectionStatus.setText(R.string.offline);
+                        }
+                    }));
+    }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        compositeDisposable.clear();
+    }
 }

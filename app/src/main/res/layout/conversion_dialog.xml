@@ -71,11 +71,11 @@
                                 android:maxLines="1"
                                 tools:text="Bitcoin"
                                 android:textColor="@color/textColorPrimaryLight"
-                                android:textSize="20sp" />
+                                android:textSize="18sp" />
 
                                 <android.support.v7.widget.AppCompatSpinner
                                     android:id="@+id/dialog_crypto_spinner"
-                                    android:layout_width="80dp"
+                                    android:layout_width="100dp"
                                     android:layout_height="35dp"
                                     android:layout_gravity="center_horizontal"
                                     android:gravity="bottom"
@@ -125,11 +125,11 @@
                                 android:maxLines="1"
                                 tools:text="US Dollar"
                                 android:textColor="@color/textColorPrimaryLight"
-                                android:textSize="20sp" />
+                                android:textSize="18sp" />
 
                                 <android.support.v7.widget.AppCompatSpinner
                                     android:id="@+id/dialog_currency_spinner"
-                                    android:layout_width="80dp"
+                                    android:layout_width="100dp"
                                     android:layout_height="35dp"
                                     android:layout_gravity="center_horizontal"
                                     android:gravity="bottom"

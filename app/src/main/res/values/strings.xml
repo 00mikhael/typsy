@@ -9,17 +9,20 @@
     <string name="rate_me">Rate me</string>
     <string name="about">about</string>
     <string name="credits">Credits</string>
-    <string name="api_cryptocompare_com">api: cryptocompare.com</string>
+    <string name="api_cryptocompare_com">Api: cryptocompare.com</string>
     <string name="online">online</string>
-    <string name="delete">delete</string>
-    <string name="snack_delete">conversion deleted</string>
+    <string name="delete">Delete</string>
+    <string name="snack_delete">Conversion Deleted</string>
     <string name="undo">UNDO</string>
     <string name="feedback">feedback</string>
-    <string name="error">AN ERROR OCCURRED</string>
+    <string name="error">NETWORK ERROR</string>
     <string name="success">SUCCESS</string>
     <string name="loading">LOADING</string>
     <string name="offline">offline</string>
     <string name="rating">Rate</string>
     <string name="cancel">Cancel</string>
     <string name="rating_dialog">RatingDialog</string>
+    <string name="andela">*\t\tAndela\t-\t\t#andelaAlc17 #epic\n\t\t\thttps://andela.com</string>
+    <string name="google">*\t\tGoogle\t\t-\t\t#alcwithgoogle\n\t\t\thttps://google.com</string>
+    <string name="udacity">*\t\tUdacity\t\t-\t\t#madewithudacity\n\t\t\thttps://udacity.com</string>
 </resources>
