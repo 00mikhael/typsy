@@ -21,7 +21,10 @@ import io.reactivex.schedulers.Schedulers;
 /**
  * Created by gravity on 10/30/17.
  */
-
+/**
+ * Local Data Source - A Singleton class that Abstracts
+ * away how data is fetched from the database from the data controller
+ */
 public class LocalDataSource {
 
     private static LocalDataSource INSTANCE;

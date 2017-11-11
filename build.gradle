@@ -24,3 +24,24 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+// Define versions in a single place
+ext {
+    // Sdk and tools
+    minSdkVersion = 19
+    targetSdkVersion = 26
+    compileSdkVersion = 26
+    buildToolsVersion = '26.0.2'
+
+    // App dependencies
+    junitVersion = '4.12'
+    supportLibraryVersion = '27.0.0'
+    retrofitVersion = '2.3.0'
+    rxJavaVersion = '2.1.5'
+    rxAndroidVersion = '2.0.1'
+    rxNetworkVersion = '0.12.1'
+    glideVersion = '4.3.0'
+    circleImageVersion = '2.2.0'
+    architectureVersion = '1.0.0'
+    architectureRuntimeVersion = '1.0.3'
+}

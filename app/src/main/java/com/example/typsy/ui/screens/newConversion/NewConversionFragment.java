@@ -51,6 +51,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class NewConversionFragment extends Fragment {
 
+    // private fields declaration
     private FragmentManager mFragmentManager;
     private AppCompatImageView mCryptoImage;
     private CircleImageView mCurrencyImage;
@@ -80,12 +81,14 @@ public class NewConversionFragment extends Fragment {
     private List<Currency> mCurrencyList = new ArrayList<>();
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
+    // returns current lifecycle
     @NonNull
     @Override
     public Lifecycle getLifecycle() {
         return super.getLifecycle();
     }
 
+    // creates a new instance of the fragment
     public static NewConversionFragment newInstance() {
         return new NewConversionFragment();
     }
@@ -95,9 +98,10 @@ public class NewConversionFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.conversion_dialog, container, false);
 
+        // creating an instance of NewConversionViewModel from ViewModelProviders
         mViewModel = ViewModelProviders.of(this).get(NewConversionViewModel.class);
 
-        //
+        // initializing fields
         mFragmentManager = getActivity().getSupportFragmentManager();
         mCryptoImage = view.findViewById(R.id.dialog_crypto_avatar);
         mCurrencyImage = view.findViewById(R.id.dialog_currency_avatar);
@@ -120,33 +124,40 @@ public class NewConversionFragment extends Fragment {
         return view;
     }
 
+    // onViewCreated - initialize observable fields
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        // observe current coin
         mViewModel.getVmCoin().observe(this, coin -> {
             mCoin = coin;
             onCoinChange(coin);
             mViewModel.setVmFCode(coin.getCode());
         });
 
+        // observe current currency
         mViewModel.getVmCurrency().observe(this, currency -> {
             mCurrency = currency;
             onCurrencyChange(currency);
             mViewModel.setVmTCode(currency.getCode());
         });
 
+        // observe coin list
         mViewModel.getVmCoinList().observe(this, coins -> {
             mCoinList = coins;
             mViewModel.setVmCoin(Util.getCurrentCoin(mCoinList, "BTC"));
             mCryptoSpinnerAdapter.setItems(coins);
         });
+
+        // observe currency list
         mViewModel.getVmCurrencyList().observe(this, currencies -> {
             mCurrencyList = currencies;
             mViewModel.setVmCurrency(Util.getCurrentCurrency(mCurrencyList, "NGN"));
             mCurrencySpinnerAdapter.setItems(currencies);
         });
 
+        // observe current price and change states
         mViewModel.getVmPrice().observe(this, resource -> {
             if (resource.status.equals(Status.LOADING)) {
                 if (resource.data != null) {
@@ -165,6 +176,7 @@ public class NewConversionFragment extends Fragment {
 
         });
 
+        // observe coin spinner selected code and query price
         mViewModel.getVmFCode().observe(this, s -> {
             fcode = s;
             if (tcode != null) {
@@ -172,6 +184,7 @@ public class NewConversionFragment extends Fragment {
             }
         });
 
+        // observe currency spinner selected code and query price
         mViewModel.getVmTCode().observe(this, s -> {
             tcode = s;
             if (fcode != null) {
@@ -179,6 +192,7 @@ public class NewConversionFragment extends Fragment {
             }
         });
 
+        // observe and show snackbar messages
         mViewModel.getVmSnackMessage().observe(this, s -> {
             if (s != null) {
                 Snackbar snackbar = Snackbar.make(mCoordinatorLayout, s, Snackbar.LENGTH_SHORT);
@@ -189,8 +203,10 @@ public class NewConversionFragment extends Fragment {
         setUpView();
     }
 
+    // set up view listeners
     public void setUpView() {
 
+        // click listener for crypto spinner
         mCryptoSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -202,6 +218,7 @@ public class NewConversionFragment extends Fragment {
             public void onNothingSelected(AdapterView<?> adapterView) {}
         });
 
+        // click listener for currency spinner
         mCurrencySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -213,6 +230,7 @@ public class NewConversionFragment extends Fragment {
             public void onNothingSelected(AdapterView<?> adapterView) {}
         });
 
+        // text change listener for amount to convert edittext
         mAmountToConvert.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -237,6 +255,7 @@ public class NewConversionFragment extends Fragment {
             }
         });
 
+        // click listener for done fab - creates new conversion and saves
         mDoneFab.setOnClickListener(view1 -> {
             hideSoftInputPanel(mAmountToConvert);
             mViewModel.saveConversion(onConversionComplete(mCoin, mCurrency, mPrice));
@@ -246,22 +265,26 @@ public class NewConversionFragment extends Fragment {
 
     }
 
+    // set up view on price change
     private void onPriceChange(Price price) {
         mCryptoSymbol.setText(price.getfSym());
         mCurrencySymbol.setText(price.gettSym());
         mConversionValue.setText(String.valueOf(Util.toTwoDecimal(calculateValue(mPrice))));
     }
 
+    // set up view on coin change
     private void onCoinChange(Coin coin) {
         Glide.with(this).load(coin.getImageUrl()).thumbnail(0.5f).into(mCryptoImage);
         mCryptoName.setText(coin.getCoinName());
     }
 
+    // set up view on currency change
     private void onCurrencyChange(Currency currency) {
         Glide.with(this).load(currency.getFlag()).thumbnail(0.5f).into(mCurrencyImage);
         mCurrencyName.setText(currency.getName());
     }
 
+    // calculate conversion value
     private Double calculateValue(Price price) {
         if (input != null) {
             result = price.getRawPrice() * input;
@@ -270,6 +293,7 @@ public class NewConversionFragment extends Fragment {
         return result;
     }
 
+    // create new conversion when done fab is clicked
     private Conversion onConversionComplete(Coin coin, Currency currency, Price price) {
         Conversion conversion = new Conversion();
         conversion.setAmountToConvert(input);
@@ -288,6 +312,7 @@ public class NewConversionFragment extends Fragment {
         return conversion;
     }
 
+    // hides keyboard
     private void hideSoftInputPanel(View v) {
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         if (imm != null) {
@@ -295,6 +320,7 @@ public class NewConversionFragment extends Fragment {
         }
     }
 
+    // observes network state and update view
     private void observeNetwork() {
         Single<Boolean> single = ReactiveNetwork.checkInternetConnectivity();
         compositeDisposable.add(single.subscribeOn(Schedulers.io())
@@ -310,6 +336,7 @@ public class NewConversionFragment extends Fragment {
                     }));
     }
 
+    // clear disposables
     @Override
     public void onPause() {
         super.onPause();

@@ -18,8 +18,10 @@ import java.util.List;
 
 public class ConversionListViewModel extends AndroidViewModel {
 
+    // conversionList liveData
     private LiveData<List<Conversion>> conversionList = new MediatorLiveData<>();
 
+    // data controller
     private DataRepository mRepository;
 
     public ConversionListViewModel(@NonNull Application application) {

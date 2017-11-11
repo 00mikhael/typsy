@@ -8,7 +8,7 @@ import io.reactivex.Flowable;
 /**
  * Created by gravity on 10/25/17.
  */
-
+// converts RxJava Flowables to LiveData
 public class ReactiveStreams<T> {
     public LiveData<T> toLiveData(Flowable<T> responseFlowable) {
         return LiveDataReactiveStreams.fromPublisher(responseFlowable);

@@ -22,6 +22,7 @@ import java.util.List;
 
 public class NewConversionViewModel extends AndroidViewModel{
 
+    // declare mutable fields
     private MutableLiveData<Resource<Price>> vmPrice = new MutableLiveData<>();
     private MutableLiveData<List<Coin>> vmCoinList = new MutableLiveData<>();
     private MutableLiveData<List<Currency>> vmCurrencyList = new MutableLiveData<>();
@@ -31,6 +32,7 @@ public class NewConversionViewModel extends AndroidViewModel{
     private MutableLiveData<Currency> vmCurrency = new MutableLiveData<>();
     private MutableLiveData<String> vmSnackMessage = new MutableLiveData<>();
 
+    // data controller
     private DataRepository mRepository;
 
     public NewConversionViewModel(@NonNull Application application) {

@@ -23,6 +23,7 @@ public class AppConstant {
     public static final String BASE_URL_TWO = "https://www.cryptocompare.com";
     public static final String BASE_URL_THREE = "https://restcountries.eu";
 
+    // returns the currencylist as a MutableLiveData
     public static MutableLiveData<List<Coin>> getCoinList() {
         final MutableLiveData<List<Coin>> liveData = new MutableLiveData<>();
         List<Coin> coins = new ArrayList<>();
@@ -51,6 +52,7 @@ public class AppConstant {
         return liveData;
     }
 
+    // returns the coinlist as a MutableLiveData
     public static MutableLiveData<List<Currency>> getCurrencyList() {
         final MutableLiveData<List<Currency>> liveData = new MutableLiveData<>();
         List<Currency> currencies = new ArrayList<>();

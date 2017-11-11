@@ -19,7 +19,7 @@ import java.util.List;
 
 public class CustomSpinnerAdapterCurrency extends BaseAdapter {
 
-    private List<com.example.typsy.data.local.entity.Currency> items;
+    private List<Currency> items;
     private LayoutInflater inflater;
 
     public CustomSpinnerAdapterCurrency(Context context) {
